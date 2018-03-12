@@ -1,0 +1,38 @@
+body {
+	text-align: center;
+}
+
+.paras{
+	background-color: #1d1230;
+}
+
+#foo{
+	color: #ff0000
+}
+
+#bar{
+	color:white;
+	background-color: red;
+	float: right;
+}
+
+html{
+	font-family: Helvetica, sans-serif;
+	font-size: 24px;
+	line-height: 32px;
+}
+
+a:hover{
+	color:orange;
+}
+
+.paras a{
+	font-size: 18px;
+}
+
+p {
+	padding:20px;
+	width:320px;
+	height:40px;
+	margin-left: 50px;
+}
