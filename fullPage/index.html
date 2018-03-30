@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8">
+<title>BIG_DATA_DEMO</title>
+<link rel="stylesheet" href="http://www.dowebok.com/demo/2014/77/css/jquery.fullPage.css">
+<style>
+body{color:#333;font-family:"Lucida Grande","Lucida Sans Unicode",Helvetica,Arial,Verdana,sans-serif}
+h1{font-size:3em;font-family:arial,helvetica;margin:0;padding:0}
+h2{font-size:2em;line-height:48px;margin:0 0 0px 0;font-family:arial,helvetica;text-indent: 0px;}
+h3{font-size:1.3em;margin:10 0 0px 0;font-family:arial,helvetica}
+h4{font-size:1.1em;font-family:arial,helvetica;margin:0,0,0,0px;padding:0;font-weight:normal;}
+h5{font-size:1.1em;font-family:arial,helvetica;margin:0,0,0,0px;padding:0;font-weight:bold;}
+h6{font-size:1.3em;margin:0 0 0px 0;font-family:arial,helvetica}
+
+
+img{-webkit-transition:all 0.7s ease-out;-moz-transition:all 0.7s ease-out;-o-transition:all 0.7s ease-out;transition:all 0.7s ease-out}
+
+
+.section{
+	text-align:center;
+	overflow:hidden;
+	}
+
+
+
+.wrap{width:1180px;height:100%;margin-left:auto;margin-right:auto;position:relative}
+.box{text-align:left;color:#808080;font-size:1.2em;line-height:1.6em}
+
+#map { position:absolute; top:0px; bottom:100px; width:100%; }
+
+#section0{
+	display: table;
+    width: 100%;
+    height: auto;
+    padding: 200px 0;
+    color: white;
+	background: url("pics/intro-bg.jpg") no-repeat bottom center scroll;
+	background-color: black;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+#section0 img{position:absolute;z-index: 0;
+	height:100%;margin:0px;left:0px;top:0px}
+
+#section1{
+	display: table;
+    width: 100%;
+    height: auto;
+    padding: 200px 0;
+    color: white;
+	background: url("pics/2.jpg") no-repeat bottom center scroll;
+	background-color: black;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+	}
+
+#section1 img{position:absolute;left:0px;top:0px}
+
+#section1 .box1{position:absolute;top:45%;left:55%;margin-top:-180px;margin-left:70px;width:400px;height:320px;z-index:1;
+	background-color: rgba(0,0,0,0.5);
+	filter:alpha(opacity=50);
+	text-align:left;
+	padding-left: 18px;padding-right: 18px;
+	padding-top: 15px;padding-bottom: 15px;
+	color: #F0F0F0;
+	}
+#section1.box1 p1 {
+	position: relative;
+
+}
+
+
+
+#section1 .imgsContainer{display:block;position:absolute;z-index:1;top:42%;left:58%;margin-top:-325px;margin-left:-747px;width:800px;height:696px}
+
+#section1 img{height:100%}
+#section1 img.damage{height:20%; position:relative;left:100px; top:150px}
+#section1 img.building{height:20%; position:relative;left:90px; top:220px}
+
+
+#section2 img{position:relative;width:88%;top:60%;left:30px}
+#section2 .imgsContainer{top:60%}
+#section2 .box{text-align:center;margin:10% 0 0 0}
+
+#section3 .imgsContainer{top:70%}
+#section3 .box{text-align:center;margin:5% 0 0 0}
+
+#section4_map {padding: 0px 0;}
+#section4_map .imgsContainer{top:90%}
+#section4_map .box{text-align:center;margin:0 0 0 0;position:absolute;top:10%;left:50%}
+
+#section5_Management .imgsContainer{top:70%}
+#section5_Management .box{text-align:center;margin:5% 0 0 0}
+
+
+#infoMenu.whiteLinks li:nth-child(1) a,#infoMenu.whiteLinks li:nth-child(2) a,#infoMenu.whiteLinks li:nth-child(3) a{color:#fff}
+#infoMenu{font-family:arial,helvetica}
+.fullPage-tooltip{color:#AAA}
+#fullPage-nav span,.fullPage-slidesNav span{border-color:#AAA}
+#fullPage-nav li .active span,.fullPage-slidesNav .active span{background:#AAA}
+
+
+</style>
+
+<script src="js/jquery-1.8.3.min.js"></script>
+<script src="http://cdn.staticfile.org/jqueryui/1.10.3/jquery-ui.min.js"></script>
+<script src="http://www.dowebok.com/demo/2014/77/js/jquery.fullPage.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+
+
+
+
+		$.fn.fullpage({
+			'verticalCentered': false,
+			'anchors': ['page1', 'page2', 'page3', 'page4','page5','page6'],
+			'css3': true,
+			'slidesColor': [, '#fff', '#fff', '#fff','#fff','#fff'], //引用图片
+			'navigation': true,
+			'navigationPosition': 'right',
+			'navigationTooltips': ['Home', 'Context', 'Data', 'Visualization','Map','Management'],
+			'slidesNavigation':[false, false, false, true, true, false],
+			'slicesNavPosition':[, , , 'bottom', 'top', ],
+			'controlArrowColor':'#808080',
+
+			'afterLoad': function(anchorLink, index){
+				if(index == 2){
+					$('#iphone3, #iphone2, #iphone4').addClass('active');
+				}
+				$('#infoMenu').toggleClass('whiteLinks', index ==4);
+
+			},
+
+			'onLeave': function(index, direction){
+				if (index == 3 && direction == 'down'){
+					$('.section').eq(index -1).removeClass('moveDown').addClass('moveUp');
+				}
+				else if(index == 3 && direction == 'up'){
+					$('.section').eq(index -1).removeClass('moveUp').addClass('moveDown');
+				}
+
+				$('#staticImg').toggleClass('active', (index == 2 && direction == 'down' ) || (index == 4 && direction == 'up'));
+				$('#staticImg').toggleClass('moveDown', index == 3 && direction == 'down');
+			},
+
+			afterRender: function(){
+				$('#infoMenu').appendTo('body');
+
+				$('#githubLink, .twitter-share-button').appendTo('body');
+			}
+
+		});
+
+		L.mapbox.accessToken = 'pk.eyJ1Ijoic3hkMTQiLCJhIjoiY2lvdmNmbzY4MDE2NXVlbTVkbzQxbHE1aSJ9.WQ7DyDrYj-hZfgM3Bn6oGA';
+		var map1 = L.mapbox.map('map', 'mapbox.streets')
+		    .setView([42.36, -71.05], 12);
+
+
+	});
+</script>
+</head>
+
+<body>
+
+
+<div class="section" id="section0">
+	<div class = "masthead">
+		<h1>MORTGAGE LENDING + CLIMATE RISKS IN BOSTON</h1>
+		<h3>How lender behavior in Boston aligns with or diverges from climate risk</h3>
+	</div>
+	<!-- <img src="pics/intro-bg.jpg" /> -->
+
+
+</div>
+
+<div class="section" id="section1">
+	<div class="wrap">
+
+		<div class="imgsContainer">
+
+			<img class = 'damage' src="pics/2a.png"  id="2a" />
+			<img class = 'building' src="pics/2b.png"  id="2b" />
+
+			<!-- 大图做背景图片，淡入一个半透明色块，然后出现2a和2b两张图 -->
+
+		</div>
+
+		<div class="box1">
+			<p1>
+			<h2>CONTEXT</h2>
+			<h4>As climate change intensifies the impact of future storms, lenders and borrowers making long-term credit and investment decisions could be exposed to significant additional risks.</h4>
+		 	</p1>
+			<div>
+				<h3>RESEARCH QUESTIONS</h3>
+				<h4>&bull; How much recent mortgage debt is at risk for sea level rise and flooding?</h4>
+				<h4>&bull; Which lenders and borrowers hold the most risk?</h4>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<div class="section moveDown" id="section2">
+	<div class="box">
+		<h2>DATA & VISUALIZATION</h2>
+	</div>
+	<div class="imgsContainer">
+		<img  src="pics/3.png"  id="DIAGRAM"/>
+	</div>
+</div>
+
+
+<div class="section moveDown" id="section3">
+	<div class="slide">
+
+		<div class="box">
+			<h2>AGGREGATED DATA</h2>
+			<p> &bull; Total dollar value of loans made in Boston </p>
+			<p> &bull; Shares of lenders</p>
+			<p> &bull; Debt characteristics</p>
+
+		</div>
+		<div class="imgsContainer">
+			<img  src="pics/4A.png"  id="DIAGRAM"/>
+		</div>
+
+
+	</div>
+
+	<div class = "slide">
+
+		<div class="box">
+
+			<h2>RISK SCENARIOS</h2>
+			<p> &bull; Flood risks and sea level rise Data:</p>
+			<p> &bull; FEMA, Boston Climate Risks 2030’s, 2050’s, and 2070’s</p>
+
+		</div>
+		<div class="imgsContainer">
+			<img  src="pics/4B.png"  id="DIAGRAM"/>
+		</div>
+
+	</div>
+
+	<div class = "slide">
+		<div class="box">
+
+			<h2>MAP DETAIL</h2>
+			<p> Choropleth map by census tracts  </p>
+			<p> &bull; Median loan values </p>
+			<p> &bull; Distribution of loan values</p>
+		</div>
+		<div class="imgsContainer">
+			<img  src="pics/4C.png"  id="DIAGRAM"/>
+		</div>
+
+	</div>
+</div>
+
+
+<script src='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.js'></script>
+<link href='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.css' rel='stylesheet' />
+
+<div class="section moveDown" id="section4_map">
+	<div class="slide">
+		<div id='map'></div>
+	</div>
+
+	<div class="slide">
+		<div id='map'></div>
+
+	</div>
+
+	<div class="slide">
+		<div id='map'></div>
+
+	</div>
+
+	<div class="slide">
+		<div id='map'></div>
+
+	</div>
+
+</div>
+
+
+
+
+<div class="section moveDown" id="section5_Management">
+	<div class="wrap">
+		<div class="box">
+			<h2>MILESTONES</h2>
+		</div>
+		<div class="imgsContainer">
+			<img src="pics/6.png" />
+		</div>
+	</div>
+
+</div>
+
+
+</body>
+</html>
