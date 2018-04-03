@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-
   <head>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Grayscale - Start Bootstrap Theme</title>
+    <title>Underwater</title>
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -20,7 +18,8 @@
 
     <!-- Custom styles for this template -->
     <link href="css/grayscale.min.css" rel="stylesheet">
-
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="/js/sankey.js"></script>
   </head>
 
   <body id="page-top">
@@ -28,7 +27,6 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
       <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="#page-top">Start Bootstrap</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           Menu
           <i class="fa fa-bars"></i>
@@ -36,13 +34,25 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#about">About</a>
+              <a class="nav-link js-scroll-trigger" href="#questions">questions</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#download">Download</a>
+              <a class="nav-link js-scroll-trigger" href="#lenders">Lenders</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
+              <a class="nav-link js-scroll-trigger" href="#risks">Risks</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#spatial">Spatial</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#data">Data</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#team">Team</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#workplan">Workplan</a>
             </li>
           </ul>
         </div>
@@ -55,10 +65,10 @@
         <div class="container">
           <div class="row">
             <div class="col-lg-8 mx-auto">
-              <h1 class="brand-heading">Grayscale</h1>
-              <p class="intro-text">A free, responsive, one page Bootstrap theme.
-                <br>Created by Start Bootstrap.</p>
-              <a href="#about" class="btn btn-circle js-scroll-trigger">
+              <h1 class="brand-heading">UNDERWATER</h1>
+              <p>Mortgage lending and climate risks in Boston.
+                <br>How lender behavior in Boston aligns with or diverges from climate risk.</p>
+              <a href="#questions" class="btn btn-circle js-scroll-trigger">
                 <i class="fa fa-angle-double-down animated"></i>
               </a>
             </div>
@@ -67,76 +77,285 @@
       </div>
     </header>
 
-    <!-- About Section -->
-    <section id="about" class="content-section text-center">
+    <!-- Questions Section -->
+    <section id="questions" class="content-section">
       <div class="container">
         <div class="row">
           <div class="col-lg-8 mx-auto">
-            <h2>About Grayscale</h2>
-            <p>Grayscale is a free Bootstrap theme created by Start Bootstrap. It can be yours right now, simply download the template on
-              <a href="http://startbootstrap.com/template-overviews/grayscale/">the preview page</a>. The theme is open source, and you can use it for any purpose, personal or commercial.</p>
-            <p>This theme features stock photos by
-              <a href="http://gratisography.com/">Gratisography</a>
-              along with a custom Google Maps skin courtesy of
-              <a href="http://snazzymaps.com/">Snazzy Maps</a>.</p>
-            <p>Grayscale includes full HTML, CSS, and custom JavaScript files along with SASS and LESS files for easy customization!</p>
+            <table align='center' width='100%'>
+        			<tr>
+        				<td width=50% valign='middle' text-align='left'>
+                  <img src="img/2ab.png"/ width='80%'>
+                </td>
+        				<td width=50% valign="top">
+                  <h2>Research Questions</h2>
+                  <p>As climate change intensifies the impact of future storms, lenders and borrowers making long-term credit and investment decisions could be exposed to significant additional risks.</p>
+                  <p><i>&bull; How much recent mortgage debt is at risk for sea level rise and flooding?
+        					</br>&bull; Which lenders and borrowers hold the most risk?</i></p>
+        				</td>
+        			</tr>
+        		</table>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Download Section -->
-    <section id="download" class="download-section content-section text-center">
+    <!-- Lenders Section -->
+    <section id="lenders" class="download-section content-section">
       <div class="container">
         <div class="col-lg-8 mx-auto">
-          <h2>Download Grayscale</h2>
-          <p>You can download Grayscale for free on the preview page at Start Bootstrap.</p>
-          <a href="http://startbootstrap.com/template-overviews/grayscale/" class="btn btn-default btn-lg">Visit Download Page</a>
+          <h2>Lenders by loan amount</h2>
+          <div id='sankey' style="width:1000px;height:1000px">
+            <script>
+            var units = "Widgets";
+
+            var margin = {top: 10, right: 10, bottom: 10, left: 10},
+                width = 700 - margin.left - margin.right,
+                height = 300 - margin.top - margin.bottom;
+
+            var formatNumber = d3.format(",.0f"),    // zero decimal places
+                format = function(d) { return formatNumber(d) + " " + units; },
+                color = d3.scale.category20();
+
+            // append the svg canvas to the page
+            var svg = d3.select("#chart").append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+              .append("g")
+                .attr("transform",
+                      "translate(" + margin.left + "," + margin.top + ")");
+
+            // Set the sankey diagram properties
+            var sankey = d3.sankey()
+                .nodeWidth(36)
+                .nodePadding(40)
+                .size([width, height]);
+
+            var path = sankey.link();
+
+            // load the data (using the timelyportfolio csv method)
+            d3.csv("../csv/loan-by-lender.csv", function(error, data) {
+
+              //set up graph in same style as original example but empty
+              graph = {"nodes" : [], "links" : []};
+
+                data.forEach(function (d) {
+                  graph.nodes.push({ "panel_name": d.source });
+                  graph.nodes.push({ "total_loan": d.target });
+                  graph.links.push({ "panel_name": d.source,
+                                     "total_loan": d.target,
+                                     "loan_amount": +d.value });
+                 });
+
+                 // return only the distinct / unique nodes
+                 graph.nodes = d3.keys(d3.nest()
+                   .key(function (d) { return d.name; })
+                   .map(graph.nodes));
+
+                 // loop through each link replacing the text with its index from node
+                 graph.links.forEach(function (d, i) {
+                   graph.links[i].source = graph.nodes.indexOf(graph.links[i].source);
+                   graph.links[i].target = graph.nodes.indexOf(graph.links[i].target);
+                 });
+
+                 //now loop through each nodes to make nodes an array of objects
+                 // rather than an array of strings
+                 graph.nodes.forEach(function (d, i) {
+                   graph.nodes[i] = { "name": d };
+                 });
+
+              sankey
+                .nodes(graph.nodes)
+                .links(graph.links)
+                .layout(32);
+
+            // add in the links
+              var link = svg.append("g").selectAll(".link")
+                  .data(graph.links)
+                .enter().append("path")
+                  .attr("class", "link")
+                  .attr("d", path)
+                  .style("stroke-width", function(d) { return Math.max(1, d.dy); })
+                  .sort(function(a, b) { return b.dy - a.dy; });
+
+            // add the link titles
+              link.append("title")
+                    .text(function(d) {
+                    return d.source.name + " → " +
+                            d.target.name + "\n" + format(d.value); });
+
+            // add in the nodes
+              var node = svg.append("g").selectAll(".node")
+                  .data(graph.nodes)
+                .enter().append("g")
+                  .attr("class", "node")
+                  .attr("transform", function(d) {
+                  return "translate(" + d.x + "," + d.y + ")"; })
+                .call(d3.behavior.drag()
+                  .origin(function(d) { return d; })
+                  .on("dragstart", function() {
+                  this.parentNode.appendChild(this); })
+                  .on("drag", dragmove));
+
+            // add the rectangles for the nodes
+              node.append("rect")
+                  .attr("height", function(d) { return d.dy; })
+                  .attr("width", sankey.nodeWidth())
+                  .style("fill", function(d) {
+                  return d.color = color(d.name.replace(/ .*/, "")); })
+                  .style("stroke", function(d) {
+                  return d3.rgb(d.color).darker(2); })
+                .append("title")
+                  .text(function(d) {
+                  return d.name + "\n" + format(d.value); });
+
+            // add in the title for the nodes
+              node.append("text")
+                  .attr("x", -6)
+                  .attr("y", function(d) { return d.dy / 2; })
+                  .attr("dy", ".35em")
+                  .attr("text-anchor", "end")
+                  .attr("transform", null)
+                  .text(function(d) { return d.name; })
+                .filter(function(d) { return d.x < width / 2; })
+                  .attr("x", 6 + sankey.nodeWidth())
+                  .attr("text-anchor", "start");
+
+            // the function for moving the nodes
+              function dragmove(d) {
+                d3.select(this).attr("transform",
+                    "translate(" + d.x + "," + (
+                            d.y = Math.max(0, Math.min(height - d.dy, d3.event.y))
+                        ) + ")");
+                sankey.relayout();
+                link.attr("d", path);
+              }
+            });
+            </script>
+          </div>
+          <p>Total dollar value of loans made in Boston, Shares of lenders, Debt characteristics</p>
         </div>
       </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="content-section text-center">
+    <!-- Risks Section -->
+    <section id="risks" class="content-section">
       <div class="container">
-        <div class="row">
           <div class="col-lg-8 mx-auto">
-            <h2>Contact Start Bootstrap</h2>
-            <p>Feel free to leave us a comment on the
-              <a href="http://startbootstrap.com/template-overviews/grayscale/">Grayscale template overview page</a>
-              on Start Bootstrap to give some feedback about this theme!</p>
-            <ul class="list-inline banner-social-buttons">
-              <li class="list-inline-item">
-                <a href="https://twitter.com/SBootstrap" class="btn btn-default btn-lg">
-                  <i class="fa fa-twitter fa-fw"></i>
-                  <span class="network-name">Twitter</span>
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a href="https://github.com/BlackrockDigital/startbootstrap" class="btn btn-default btn-lg">
-                  <i class="fa fa-github fa-fw"></i>
-                  <span class="network-name">Github</span>
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a href="https://plus.google.com/+Startbootstrap/posts" class="btn btn-default btn-lg">
-                  <i class="fa fa-google-plus fa-fw"></i>
-                  <span class="network-name">Google+</span>
-                </a>
-              </li>
-            </ul>
+            <h2>Risks</h2>
+            <table>
+              <tr>
+                <td>
+                  <img src="img/4B.png"/ width='100%'>
+                </td>
+              </tr>
+            </table>
+            <p></p>
+            <p>Flood risks and sea level rise Data: FEMA, Boston Climate Risks 2030’s, 2050’s, and 2070’s</p>
           </div>
+      </div>
+    </section>
+
+<!-- Mapbox section -->
+    <!-- Spatial Section -->
+    <section id="spatial" class="content-section">
+      <div class="container">
+          <div class="col-lg-8 mx-auto">
+            <h2>Spatial</h2>
+            <p>Choropleth map by census tracts, median loan values, distribution of loan values</p>
+            <table>
+              <tr>
+                <td background-color="#ffffff">
+                  <img src="img/4C.png"/ width='100%'>
+                </td>
+              </tr>
+            </table>
+          </div>
+      </div>
+    </section>
+
+    <!-- Data Section -->
+    <section id="data" class="content-section">
+      <div class="container">
+          <div class="col-lg-8 mx-auto">
+            <h2>Data Sources</h2>
+            <table>
+              <tr>
+                <td>
+                  <img src="img/3.png"/ width='100%'>
+                </td>
+              </tr>
+            </table>
+          </div>
+      </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="content-section">
+      <div class="container">
+        <div class="col-lg-8 mx-auto">
+          <h2>Team members</h2>
+          <table align='center' width='100%'>
+      			<tr>
+      				<td width=50% valign='top' text-align='right'>
+                <h6>Wan Chantavilasvong</h6>
+              </td>
+              <td width=50% valign='top' text-align='left'>
+                <p><i>Design Principal</i></p>
+              </td>
+            </tr>
+            <tr>
+              <td width=50% valign='top' text-align='right'>
+                <h6 text-align='right'>Louis Liss</h6>
+              </td>
+              <td width=50% valign='top' text-align='left'>
+                <p><i>VP of Data Analytics</i></p>
+              </td>
+            </tr>
+            <tr>
+              <td width=50% valign='top' text-align='right'>
+                <h6>Michael Pearce</h6>
+              </td>
+              <td width=50% valign='top' text-align='left'>
+                <p><i>Project Manager</i></p>
+              </td>
+            </tr>
+            <tr>
+              <td width=50% valign='top' text-align='right'>
+                <h6>Xudong Sun</h6>
+              </td>
+              <td width=50% valign='top' text-align='left'>
+                <p><i>Chief Technology Officerl</i></p>
+              </td>
+            </tr>
+      		</table>
         </div>
+      </div>
+    </section>
+
+    <!-- Workplan Section -->
+    <section id="workplan" class="content-section">
+      <div class="container">
+          <div class="col-lg-8 mx-auto">
+            <h2>Workplan</h2>
+            <img src="img/6.jpg"/ width='100%'>
+          </div>
       </div>
     </section>
 
     <!-- Map Section -->
-    <div id="map"></div>
+    <!-- <div id="map"></div> -->
 
     <!-- Footer -->
-    <footer>
-      <div class="container text-center">
-        <p>Copyright &copy; Your Website 2018</p>
+    <footer  class="content-section text-center">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <!-- <a href="team.html" class="btn btn-default btn-lg">Team members</a> -->
+            <!-- <a href="data.html" class="btn btn-default btn-lg">Data sources</a> -->
+            <h6>Copyright UNDERWATER 2018</h6>
+          </div>
+        </div>
       </div>
     </footer>
 
