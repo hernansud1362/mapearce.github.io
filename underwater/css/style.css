@@ -43,12 +43,12 @@ a {
   -webkit-transition: all 0.2s ease-in-out;
   -moz-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
-  color: #0074B1;
+  color: #42DCA3;
 }
 
 a:focus, a:hover {
   text-decoration: none;
-  color: #00A7E1;
+  color: #1d9b6c;
 }
 
 #mainNav {
@@ -81,7 +81,7 @@ a:focus, a:hover {
 }
 
 #mainNav .navbar-nav .nav-item:hover {
-  color: fade(#00A7E1, 80%);
+  color: fade(white, 80%);
   outline: none;
   background-color: transparent;
 }
@@ -113,7 +113,7 @@ a:focus, a:hover {
     background-color: rgba(255, 255, 255, 0.3);
   }
   #mainNav .nav-link.active:hover {
-    color: #0074B1;
+    color: white;
   }
 }
 
@@ -124,7 +124,7 @@ a:focus, a:hover {
   padding: 200px 0;
   text-align: center;
   color: white;
-  background: url("img/1.jpg") no-repeat bottom center scroll;
+  background: url("../img/intro-bg.jpg") no-repeat bottom center scroll;
   background-color: black;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -180,11 +180,11 @@ a:focus, a:hover {
 }
 
 .content-section {
-  padding-top: 50px;
-  padding-bottom: 50px;
+  padding-top: 150px;
+  padding-bottom: 150px;
 }
 
-/* .download-section {
+.download-section {
   color: white;
   background: url("../img/downloads-bg.jpg") no-repeat center center scroll;
   background-color: black;
@@ -192,14 +192,14 @@ a:focus, a:hover {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-} */
+}
 
-/* #map {
+#map {
   width: 100%;
   height: 300px;
-} */
+}
 
-/* @media (min-width: 992px) {
+@media (min-width: 992px) {
   .content-section {
     padding-top: 200px;
     padding-bottom: 200px;
@@ -207,7 +207,7 @@ a:focus, a:hover {
   #map {
     height: 350px;
   }
-} */
+}
 
 .btn {
   font-family: 'Cabin', 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -220,16 +220,16 @@ a:focus, a:hover {
 }
 
 .btn-default {
-  color: #0074B1;
-  border: 1px solid #0074B1;
+  color: #42DCA3;
+  border: 1px solid #42DCA3;
   background-color: transparent;
 }
 
 .btn-default:focus, .btn-default:hover {
   color: black;
-  border: 1px solid #0074B1;
+  border: 1px solid #42DCA3;
   outline: none;
-  background-color: #0074B1;
+  background-color: #42DCA3;
 }
 
 ul.banner-social-buttons {
