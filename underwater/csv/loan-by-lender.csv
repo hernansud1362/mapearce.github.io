@@ -1,4 +1,4 @@
-bank,source,loan_amt
+source,target,link
 JPMORGAN CHASE BK NA,Boston Housing Loans,4940599
 WELLS FARGO BK NA,Boston Housing Loans,4724007
 LOANDEPOT.COM,Boston Housing Loans,4108431
