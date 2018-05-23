@@ -1,388 +1,321 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+<head>
+  <meta charset="utf-8">
 
-    <title>Underwater</title>
+	<title>Underwater</title>
+	<link rel="stylesheet" type="text/css" href="css/jquery.fullPage.css" />
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 
-    <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- load jquery and jquery-ui libraries for the fullPage transitions -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="js/jquery.fullPage.js"></script>
+	<script type="text/javascript" src="js/scrolloverflow.js"></script>
+  <script type="text/javascript" src="https://d3js.org/d3.v3.min.js"></script>
+  <!-- <script type="text/javascript" src="https://colorbrewer2.org/export/colorbrewer.min.js"></script> -->
+  <script type="text/javascript" src="js/sankey.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#fullpage').fullpage({
+				anchors: ['splash','introduction', 'data', 'lenders', 'riskareas', 'riskamount', 'banks', 'bankrisks', 'team'],
+				sectionsColor: ['#000', '#000', '#fff', '#fff', '#000', '#000', '#000', '#000', '#000'],
+				navigation: true,
+				navigationPosition: 'right',
+				afterResponsive: function(isResponsive){
+				}
+			});
+		});
+	</script>
+  <!-- load datasource goes here -->
+  <!--<script src="data/boston_neighborhoods.json"></script> -->
 
-    <!-- Custom fonts for this template -->
-    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
-    <link href='https://fonts.googleapis.com/css?family=Cabin:700' rel='stylesheet' type='text/css'>
+  <style>
+  .section {
+    text-align: center;
+  }
+  </style>
+  <!-- SANKEY sTYLE-->
+  <style>
+  .node rect {
+    cursor: move;
+    fill-opacity: 1;
+    shape-rendering: crispEdges;
+  }
+  .node text {
+    pointer-events: none;
+    text-shadow: none;
+    font-family: sans-serif;
+    font-size: .7em;
+    text-transform: uppercase;
+    color: #ffffff;
+  }
+  .link {
+    fill: none;
+    stroke: #000;
+    stroke-opacity: .2;
+  }
+  .link:hover {
+    stroke-opacity: .8;
+  }
+  </style>
+</head>
 
-    <!-- Custom styles for this template -->
-    <link href="css/grayscale.min.css" rel="stylesheet">
+<body>
+  <div id="fullpage">
 
-    <!--This is styling from the DEMO SANKEY PAGE -->
-    <style>
-    .node rect {
-      cursor: move;
-      fill-opacity: 1;
-      shape-rendering: crispEdges;
-    }
-    .node text {
-      pointer-events: none;
-      text-shadow: none;
-      font-family: 'Cabin', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      font-weight: 700;
-      font-size: .7em;
-      text-transform: uppercase;
-      color: #ffffff;
-    }
-    .link {
-      fill: none;
-      stroke: #fff;
-      stroke-opacity: .2;
-    }
-    .link:hover {
-      stroke-opacity: .8;
-    }
-    </style>
-    <!-- End of DEMO SANKEY PAGE styling -->
-  </head>
+  	<div class="section fp-auto-height-responsive" id="section0">
+  		<div class="splash">
+        <h1 style="font-size:4em; color:#fff;">UNDERWATER</h1>
+        <p style="color:#fff;">Exploring the relationship between mortgage lending patterns and climate risk in Boston</p>
+        <!-- <a href="#questions" class="btn btn-circle js-scroll-trigger">
+          <i class="fa fa-angle-double-down animated"></i>
+        </a> -->
+  		</div>
+  	</div>
 
-  <body id="page-top">
+    <div class="section fp-auto-height-responsive" id="section1">
+  		<div class="introduction">
+        <!-- <table align='center' width='80%'>
+          <tr>
+            <td width=50% valign='middle' text-align='left'>
+              <img src="img/2ab.png"/ width='80%'>
+            </td>
+            <td width=50% valign="top"> -->
+              <h2 style="color:#fff;">Background Information & Research Question</h2>
+              <p style="color:#fff;">According to a 2017 survey, only 15% of global banks stress test their businesses related to climate change (CITE ME)</p>
+              <p style="color:#fff;">As a result, we believe there is significant opportunity to elevate lending institutions' awareness of their own lending practices that may put their balance sheets at risk</p>
+              <p style="color:#fff;">In the context of Boston, we wanted to see ________.</p>
+            <!-- </td>
+          </tr>
+        </table> -->
+  		</div>
+  	</div>
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
-      <div class="container">
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          Menu
-          <i class="fa fa-bars"></i>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#questions">Questions</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#lenders">Lenders</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#risks">Risks</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#spatial">Spatial</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#data">Data</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#team">Team</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#workplan">Workplan</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+    <div class="section fp-auto-height-responsive" id="section2">
+  		<div class="data">
+        <h2 style="color:#000;">Introduction to Data Source</h2>
+        <p style="color:#000;">We selected as our main datasource, HMDA data for the Boston area from 2014, 2015, and 2016.  We recognize that this is not an exhaustive dataset for all loans originated in the area, but we nonetheless selected it because of its consistent methodology, ease of comprehension, and public availability. We also believe that it is relatively representative of lending practices, in aggregate. For further discussion of our data source, please see the bottom of our website.</p>
+  		</div>
+  	</div>
 
-    <!-- Intro Header -->
-    <header class="masthead">
-      <div class="intro-body">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-8 mx-auto">
-              <h1 class="brand-heading">UNDERWATER</h1>
-              <p>Mortgage lending and climate risks in Boston.
-                <br>How lender behavior in Boston aligns with or diverges from climate risk.</p>
-              <a href="#questions" class="btn btn-circle js-scroll-trigger">
-                <i class="fa fa-angle-double-down animated"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </header>
-
-    <!-- Questions Section -->
-    <section id="questions" class="content-section">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-8 mx-auto">
-            <table align='center' width='100%'>
-        			<tr>
-        				<td width=50% valign='middle' text-align='left'>
-                  <img src="img/2ab.png"/ width='80%'>
-                </td>
-        				<td width=50% valign="top">
-                  <h2>Research Questions</h2>
-                  <p>As climate change intensifies the impact of future storms, lenders and borrowers making long-term credit and investment decisions could be exposed to significant additional risks.</p>
-                  <p><i>&bull; How much recent mortgage debt is at risk for sea level rise and flooding?
-        					</br>&bull; Which lenders and borrowers hold the most risk?</i></p>
-        				</td>
-        			</tr>
-        		</table>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Lenders Section -->
-    <section id="lenders" class="download-section content-section">
-      <div class="container">
-        <div class="col-lg-8 mx-auto">
-          <h2>Lenders by loan amount</h2>
-
-          <!-- TRIAL SANKEY DIAGRAM -->
-          <p id="chart">
-          <script src="https://d3js.org/d3.v3.min.js"></script>
-          <script src="https://colorbrewer2.org/export/colorbrewer.js"></script>
-          <script src="js/sankeyNew.js"></script>
-          <script>
-          var units = "million dollars";
-          var margin = {top: 0, right: 0, bottom: 0, left: 0},
-              width = 700 - margin.left - margin.right,
-              height = 300 - margin.top - margin.bottom;
-          var formatNumber = d3.format(",.0f"),    // zero decimal places
-              format = function(d) { return formatNumber(d) + " " + units; },
-              color = d3.scale.category20c();
-          // append the svg canvas to the page
-          var svg = d3.select("#chart").append("svg")
-              .attr("width", width + margin.left + margin.right)
-              .attr("height", height + margin.top + margin.bottom)
-            .append("g")
-              .attr("transform",
-                    "translate(" + margin.left + "," + margin.top + ")");
-          // Set the sankey diagram properties
-          var sankey = d3.sankey()
-              .nodeWidth(25)
-              .nodePadding(15)
-              .size([width, height]);
-          var path = sankey.link();
-          // load the data (using the timelyportfolio csv method)
-          d3.csv("csv/Top5LendersDiv1MM.csv", function(error, data) {
-            //set up graph in same style as original example but empty
-            graph = {"nodes" : [], "links" : []};
-              data.forEach(function (d) {
-                graph.nodes.push({ "name": d.source });
-                graph.nodes.push({ "name": d.target });
-                graph.links.push({ "source": d.source,
-                                   "target": d.target,
-                                   "value": +d.value });
-               });
-               // return only the distinct / unique nodes
-               graph.nodes = d3.keys(d3.nest()
-                 .key(function (d) { return d.name; })
-                 .map(graph.nodes));
-               // loop through each link replacing the text with its index from node
-               graph.links.forEach(function (d, i) {
-                 graph.links[i].source = graph.nodes.indexOf(graph.links[i].source);
-                 graph.links[i].target = graph.nodes.indexOf(graph.links[i].target);
-               });
-               //now loop through each nodes to make nodes an array of objects
-               // rather than an array of strings
-               graph.nodes.forEach(function (d, i) {
-                 graph.nodes[i] = { "name": d };
-               });
-            sankey
-              .nodes(graph.nodes)
-              .links(graph.links)
-              .layout(32);
-          // add in the links
-            var link = svg.append("g").selectAll(".link")
-                .data(graph.links)
-              .enter().append("path")
-                .attr("class", "link")
-                .attr("d", path)
-                .style("stroke-width", function(d) { return Math.max(1, d.dy); })
-                .sort(function(a, b) { return b.dy - a.dy; });
-          // add the link titles
-            link.append("title")
-                  .text(function(d) {
-                  return d.source.name + format(d.value); });
-          // add in the nodes
-            var node = svg.append("g").selectAll(".node")
-                .data(graph.nodes)
-              .enter().append("g")
-                .attr("class", "node")
-                .attr("transform", function(d) {
-                return "translate(" + d.x + "," + d.y + ")"; })
-              .call(d3.behavior.drag()
-                .origin(function(d) { return d; })
-                .on("dragstart", function() {
-                this.parentNode.appendChild(this); })
-                .on("drag", dragmove));
-          // add the rectangles for the nodes
-            node.append("rect")
-                .attr("height", function(d) { return d.dy; })
-                .attr("width", sankey.nodeWidth())
-                .style("fill", function(d) {
-                return d.color = color(d.name.replace(/ .*/, "")); })
-                // .style("stroke", function(d) {
-                // return d3.rgb(d.color).darker(0); })
-              .append("title")
+    <div class="section fp-auto-height-responsive" id="section3">
+  		<div class="lenders">
+        <h2 style="color:#000;">Boston's Top Lenders</h2>
+        <p style="color:#000;">The first visualization parses the largest lenders in the Boston area, representing their relative shares as arms of a Sankey diagram.  As you can see, the five largest lenders are ____, ______, _____, _____, and _____ and represent ____% of the total dollars lent in Boston between ____ and ______.  Though we see the top lenders contribute only to a small portion of the total lending of the region there is nonetheless value in determining how much money is at risk and which lenders are most exposed to climate change.  Confronted with this information, these banks may enact lending practices that better reflect the projections of climate change experts.</p>
+        <!-- SANKEY DIAGRAM -->
+        <p id="chart">
+        <script>
+        var units = "million dollars";
+        var margin = {top: 0, right: 0, bottom: 0, left: 0},
+            width = 700 - margin.left - margin.right,
+            height = 300 - margin.top - margin.bottom;
+        var formatNumber = d3.format(",.2f"),    // zero decimal places
+            format = function(d) { return formatNumber(d) + " " + units; },
+            color = d3.scale.category20c();
+        // append the svg canvas to the page
+        var svg = d3.select("#chart").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+          .append("g")
+            .attr("transform",
+                  "translate(" + margin.left + "," + margin.top + ")");
+        // Set the sankey diagram properties
+        var sankey = d3.sankey()
+            .nodeWidth(25)
+            .nodePadding(15)
+            .size([width, height]);
+        var path = sankey.link();
+        // load the data (using the timelyportfolio csv method)
+        d3.csv("data/bosoriginations_RiskySankey9-10.csv", function(error, data) {
+          //set up graph in same style as original example but empty
+          graph = {"nodes" : [], "links" : []};
+            data.forEach(function (d) {
+              graph.nodes.push({ "name": d.source });
+              graph.nodes.push({ "name": d.target });
+              graph.links.push({ "source": d.source,
+                                 "target": d.target,
+                                 "value": +d.value });
+             });
+             // return only the distinct / unique nodes
+             graph.nodes = d3.keys(d3.nest()
+               .key(function (d) { return d.name; })
+               .map(graph.nodes));
+             // loop through each link replacing the text with its index from node
+             graph.links.forEach(function (d, i) {
+               graph.links[i].source = graph.nodes.indexOf(graph.links[i].source);
+               graph.links[i].target = graph.nodes.indexOf(graph.links[i].target);
+             });
+             //now loop through each nodes to make nodes an array of objects
+             // rather than an array of strings
+             graph.nodes.forEach(function (d, i) {
+               graph.nodes[i] = { "name": d };
+             });
+          sankey
+            .nodes(graph.nodes)
+            .links(graph.links)
+            .layout(32);
+        // add in the links
+          var link = svg.append("g").selectAll(".link")
+              .data(graph.links)
+            .enter().append("path")
+              .attr("class", "link")
+              .attr("d", path)
+              .style("stroke-width", function(d) { return Math.max(1, d.dy); })
+              .sort(function(a, b) { return b.dy - a.dy; });
+        // add the link titles
+          link.append("title")
                 .text(function(d) {
-                return d.name + "\n" + format(d.value); });
-          // add in the title for the nodes
-            node.append("text")
-                .attr("x", -6)
-                .attr("y", function(d) { return d.dy / 2; })
-                .attr("dy", ".35em")
-                .attr("text-anchor", "end")
-                .attr("transform", null)
-                .text(function(d) { return d.name; })
-              .filter(function(d) { return d.x < width / 2; })
-                .attr("x", 6 + sankey.nodeWidth())
-                .attr("text-anchor", "start");
-          // the function for moving the nodes
-            function dragmove(d) {
-              d3.select(this).attr("transform",
-                  "translate(" + d.x + "," + (
-                          d.y = Math.max(0, Math.min(height - d.dy, d3.event.y))
-                      ) + ")");
-              sankey.relayout();
-              link.attr("d", path);
-            }
-          });
-          </script>
-          <!-- END OF TRIAL SANKEY DIAGRAM -->
-          <p>Total dollar value of loans made in Boston, Shares of lenders, Debt characteristics</p>
-        </div>
-      </div>
-    </section>
+                return d.source.name + format(d.value); });
+        // add in the nodes
+          var node = svg.append("g").selectAll(".node")
+              .data(graph.nodes)
+            .enter().append("g")
+              .attr("class", "node")
+              .attr("transform", function(d) {
+              return "translate(" + d.x + "," + d.y + ")"; })
+            .call(d3.behavior.drag()
+              .origin(function(d) { return d; })
+              .on("dragstart", function() {
+              this.parentNode.appendChild(this); })
+              .on("drag", dragmove));
+        // add the rectangles for the nodes
+          node.append("rect")
+              .attr("height", function(d) { return d.dy; })
+              .attr("width", sankey.nodeWidth())
+              .style("fill", function(d) {
+              return d.color = color(d.name.replace(/ .*/, "")); })
+              // .style("stroke", function(d) {
+              // return d3.rgb(d.color).darker(0); })
+            .append("title")
+              .text(function(d) {
+              return d.name + "\n" + format(d.value); });
+        // add in the title for the nodes
+          node.append("text")
+              .attr("x", -6)
+              .attr("y", function(d) { return d.dy / 2; })
+              .attr("dy", ".35em")
+              .attr("text-anchor", "end")
+              .attr("transform", null)
+              .text(function(d) { return d.name; })
+            .filter(function(d) { return d.x < width / 2; })
+              .attr("x", 6 + sankey.nodeWidth())
+              .attr("text-anchor", "start");
+        // the function for moving the nodes
+          function dragmove(d) {
+            d3.select(this).attr("transform",
+                "translate(" + d.x + "," + (
+                        d.y = Math.max(0, Math.min(height - d.dy, d3.event.y))
+                    ) + ")");
+            sankey.relayout();
+            link.attr("d", path);
+          }
+        });
+        </script>
+        <!-- END OF SANKEY DIAGRAM -->
+        <p>Total dollar value of loans made in Boston, Shares of lenders, Debt characteristics</p>
+  		</div>
+  	</div>
 
-    <!-- Risks Section -->
-    <section id="risks" class="content-section">
-      <div class="container">
-          <div class="col-lg-8 mx-auto">
-            <h2>Risks</h2>
-            <table>
-              <tr>
-                <td>
-                  <img src="img/4B.png"/ width='100%'>
-                </td>
-              </tr>
-            </table>
-            <p></p>
-            <p>Flood risks and sea level rise Data: FEMA, Boston Climate Risks 2030’s, 2050’s, and 2070’s</p>
-          </div>
+    <div class="section fp-auto-height-responsive" id="section4">
+      <div class="riskareas">
+        <h2>Risk Areas</h2>
+        <table align='center' width='50%'>
+          <tr>
+            <td>
+              <img src="img/4C.png"/ width='75%'>
+            </td>
+          </tr>
+        </table>
+        <p>To determine tracts at risk of flooding, we pulled the projected sea level rise from Boston WHATEVER WHATEVER for the 2030 and 2050 scenarios, reflecting 9” and 21” of sea level rise, respectively. Intersecting these shapefiles with the census tracts in the Boston area, we determined the tracts that were at least 25% inundated by these different scenarios were “at risk.” The map below outlines the maps that are at risk under the two scenarios.</p>
       </div>
-    </section>
+    </div>
 
-    <!-- Mapbox section -->
-    <!-- Spatial Section -->
-    <section id="spatial" class="content-section">
-      <div class="container">
-          <div class="col-lg-8 mx-auto">
-            <h2>Spatial</h2>
-            <p>Choropleth map by census tracts, median loan values, distribution of loan values</p>
-            <table>
-              <tr>
-                <td background-color="#ffffff">
-                  <img src="img/4C.png"/ width='100%'>
-                </td>
-              </tr>
-            </table>
-          </div>
+    <div class="section fp-auto-height-responsive" id="section5">
+      <div class="riskamount">
+        <h2>Total Dollars at Risk</h2>
+        <table align='center' width='30%'>
+          <tr>
+            <td>
+              <img src="img/4B.png"/ width='100%'>
+            </td>
+          </tr>
+        </table>
+        <p>With those identified, we were able to calculate the total number of dollars at risk under different climate change scenarios, demonstrated in the area chart above.</p>
+        <p>In total, the dollars at risk in the Boston area represents ____% of the total dollars lent in the area.</p>
       </div>
-    </section>
+    </div>
 
-    <!-- Data Section -->
-    <section id="data" class="content-section">
-      <div class="container">
-          <div class="col-lg-8 mx-auto">
-            <h2>Data Sources</h2>
-            <table>
-              <tr>
-                <td>
-                  <img src="img/3.png"/ width='100%'>
-                </td>
-              </tr>
-            </table>
-          </div>
+    <div class="section fp-auto-height-responsive" id="section6">
+      <div class="banks">
+        <h2>Classifying Banks</h2>
+        <!-- <table align='center' width='50%'>
+          <tr>
+            <td>
+              <img src="img/3.png"/ width='100%'>
+            </td>
+          </tr>
+        </table> -->
+        <p>We then broke the banks up into three categories, based on how much they lent in the area, using an even split of 33% of dollar volume to categorize the banks into large, medium, and small exposure to the overall Boston market.  (DESCRIPTIVE STATISTICS OF THEM HERE).  This treemap diagram allows you to switch between using dollar volume and number of deals to break the banks up but we relied on dollar volume through the rest of the analysis.</p>
+        <p>We can use the bl.ocks.org code from: <a href="https://bl.ocks.org/mbostock/4063582"> this </a> to create it</p>
       </div>
-    </section>
+    </div>
 
-    <!-- Team Section -->
-    <section id="team" class="content-section">
-      <div class="container">
-        <div class="col-lg-8 mx-auto">
-          <h2>Team members</h2>
-          <table align='center' width='100%'>
+    <div class="section fp-auto-height-responsive" id="section7">
+      <div class="intro">
+        <h2>Data</h2>
+        <p>To understand the nature of lending in each of the at risk tracts, we then determined the top, middle, and bottom third of lending institutions, again by $ amount.  The map below reveals that information.</p> <br>
+        <p> At the end of the day, we found ________, suggesting ________.</p>
+        <ul>
+          <li>Intensity of visualization should reflect the importance of the finding </li>
+          <li>Doesn’t have to be map - in some ways, more about the risk the banks are facing, so maybe think about use of map to talk about something true about a place and don’t need it when talking about “things” </li>
+          <li>Largest 5 lenders in set of all risky areas by each type - how much does this represent of their lending in the city? </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section fp-auto-height-responsive" id="section8">
+      <div class="team">
+        <h2>Team members</h2>
+          <table align='center' width='50%'>
       			<tr>
-      				<td width=50% valign='top' text-align='right'>
-                <h6>Wan Chantavilasvong</h6>
+      				<td width=50% valign='middle'>
+                <h6 style="text-align: left;">Wan Chantavilasvong </h6>
               </td>
-              <td width=50% valign='top' text-align='left'>
-                <p><i>Design Principal</i></p>
-              </td>
-            </tr>
-            <tr>
-              <td width=50% valign='top' text-align='right'>
-                <h6 text-align='right'>Louis Liss</h6>
-              </td>
-              <td width=50% valign='top' text-align='left'>
-                <p><i>VP of Data Analytics</i></p>
+              <td width=50% valign='middle'>
+                <p style="text-align: left;"><i> Design Principal</i></p>
               </td>
             </tr>
             <tr>
-              <td width=50% valign='top' text-align='right'>
-                <h6>Michael Pearce</h6>
+              <td width=50% valign='middle'>
+                <h6 style="text-align: left;">Louis Liss </h6>
               </td>
-              <td width=50% valign='top' text-align='left'>
-                <p><i>Project Manager</i></p>
+              <td width=50% valign='middle'>
+                <p style="text-align: left;"><i> VP of Data Analytics</i></p>
               </td>
             </tr>
             <tr>
-              <td width=50% valign='top' text-align='right'>
-                <h6>Xudong Sun</h6>
+              <td width=50% valign='middle'>
+                <h6 style="text-align: left;">Michael Pearce </h6>
               </td>
-              <td width=50% valign='top' text-align='left'>
-                <p><i>Chief Technology Officerl</i></p>
+              <td width=50% valign='middle'>
+                <p style="text-align: left;"><i> Project Manager</i></p>
+              </td>
+            </tr>
+            <tr>
+              <td width=50% valign='middle'>
+                <h6 style="text-align: left;">Xudong Sun </h6>
+              </td>
+              <td width=50% valign='top'>
+                <p style="text-align: left;"><i> Chief Technology Officer</i></p>
               </td>
             </tr>
       		</table>
-        </div>
       </div>
-    </section>
+    </div>
 
-    <!-- Workplan Section -->
-    <section id="workplan" class="content-section">
-      <div class="container">
-          <div class="col-lg-8 mx-auto">
-            <h2>Workplan</h2>
-            <img src="img/6.jpg"/ width='100%'>
-          </div>
-      </div>
-    </section>
-
-    <!-- Map Section -->
-    <!-- <div id="map"></div> -->
-
-    <!-- Footer -->
-    <footer  class="content-section text-center">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-8 mx-auto">
-            <!-- <a href="team.html" class="btn btn-default btn-lg">Team members</a> -->
-            <!-- <a href="data.html" class="btn btn-default btn-lg">Data sources</a> -->
-            <h6>Copyright UNDERWATER 2018</h6>
-          </div>
-        </div>
-      </div>
-    </footer>
-
-    <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Plugin JavaScript -->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Google Maps API Key - Use your own API key to enable the map feature. More information on the Google Maps API can be found at https://developers.google.com/maps/ -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRngKslUGJTlibkQ3FkfTxj3Xss1UlZDA&sensor=false"></script>
-
-    <!-- Custom scripts for this template -->
-    <script src="js/grayscale.min.js"></script>
-
-  </body>
-
-</html>
+  </div>
+</body>
+</html

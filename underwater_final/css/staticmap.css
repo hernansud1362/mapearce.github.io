@@ -1,0 +1,15 @@
+.zones{
+  fill: none;
+  stroke: white;
+  stroke-linejoin: round;
+}
+
+.tooltip{
+     position: absolute;
+     text-align: center;
+}
+
+.hover {
+			stroke-width: 2px;
+			opacity: 0.5;
+		}

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+	<title>Underwater</title>
+
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="js/jquery.fullPage.js"></script>
+  <script type="text/javascript" src="js/scrolloverflow.js"></script>
+  <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+  <script type="text/javascript" src="https://d3js.org/d3-queue.v2.min.js"></script>
+  <script type="text/javascript" src="js/sankey.js"></script>
+  <!-- <script type="text/javascript" src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"></script>
+  <script type="text/javascript" src="lib/StyledLayerControl/src/styledLayerControl.js"></script> -->
+  <script type="text/javascript" src="http://d3js.org/topojson.v2.min.js"></script>
+  <script type="text/javascript" src="https://d3js.org/d3-format.v1.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('#fullpage').fullpage({
+        anchors: ['cover', 'intro', 'boston-lenders', 'spatial-distribution', 'risk-amount', 'risk-lenders', 'findings-impact-future', 'info-team'],
+        sectionsColor: ["#000","#000","#000","#000","#000","#000","#000","#000"],
+        sectionSelector: '.section',
+        navigation: true,
+        navigationPosition: 'right',
+        afterResponsive: function(isResponsive){
+        }
+      });
+    });
+  </script>
+  <link rel="stylesheet" type="text/css" href="css/jquery.fullPage.css"/>
+  <!-- <link rel="stylesheet" type="text/css" href="css/sankey.css"/> -->
+  <link rel="stylesheet" type="text/css" href="css/barchart.css"/>
+  <link rel="stylesheet" type="text/css" href="css/staticmap.css"/>
+  <!-- <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css"/> -->
+  <!-- <link rel="stylesheet" type="text/css" href="css/map.css"/> -->
+  <!-- <link rel="stylesheet" type="text/css" href="lib/StyledLayerControl/css/styledLayerControl.css"/> -->
+  <link rel="stylesheet" type="text/css" href="css/style.css"/>
+  <style>
+  .node rect {
+    /* cursor: move; */
+    fill-opacity: .9;
+    shape-rendering: crispEdges;
+  }
+  .node text {
+    pointer-events: none;
+    text-shadow: none;
+    font-family: "Karla", sans-serif;
+    font-size: .6em;
+    letter-spacing: .1em;
+    color: #ffffff;
+  }
+  .link {
+    fill: none;
+    stroke: #000;
+    stroke-width: 2px;
+    stroke-opacity: .8;
+  }
+  .link:hover {
+    stroke-width: 3px;
+    stroke-opacity: 1;
+  }
+  </style>
+</head>
+<body>
+  <div id="fullpage">
+    <div class="section fp-auto-height-responsive" id="section0">
+        <h1 style="font-size:4em;">UNDERWATER</h1>
+        <p>Exploring the relationship between mortgage lending patterns and climate risk in Boston</p>
+    </div>
+  	<div class="section fp-auto-height-responsive" id="section1">
+        <p>According to a 2017 survey, only 15% of global banks stress test their businesses related to climate change. With significant media coverage dedicated to lenders that continue to provide loans in areas of high risk from climate change, we wanted to explore how the media’s coverage of lending practices match reality. The main questions we sought to answer were:</p>
+        <table width='50%' align='center'>
+    			<tr>
+    				<td>
+              <h2 style="text-transform: none; letter-spacing: 0; line-height: 1.5;">How much lending is taking place across Boston, and how much of it is in high-risk areas?
+              </br></br>Could pressuring lenders to alter their lending practices make a significant impact in protecting people from buying homes in risky areas in the future?</h2>
+            </td>
+          </tr>
+    		</table>
+
+        <!-- <p><h2 style="text-transform: none; letter-spacing: 0">How much lending is taking place across Boston, and how much of it is in high-risk areas?
+        </br></br>Could pressuring lenders to alter their lending practices make a significant impact in protecting people from buying homes in risky areas in the future?</h2></p> -->
+        <p>We used HMDA data for the Boston area from 2014, 2015 and 2016 as our main data source. We recognize that this is not an exhaustive dataset for all loans originated in the area, but we selected it because of its consistent methodology, ease of comprehension, and public availability. We also believe that it is relatively representative of lending practices in aggregate. For further discussion of our sources, please see <a href="#data">DATA</a>.</p>
+  	</div>
+  	<div class="section fp-auto-height-responsive" id="section2">
+        <h2>Boston's Top Lenders</h2>
+        <p>Across our dataset, the ten largest lenders represent 34% of the total dollars originated in Boston mortgages between 2014 and 2016.  At first glance, this suggests that concerted efforts to convince banks of their potentially harmful long-term lending practices could be effective, as a large percentage of total lending is conducted by a small number of banks. In order to definitively assert this, however, we need to understand how many of those loans are in areas of high risk of flooding due to climate change.</p>
+        <div id="sankey"></div>
+        <p>Total dollar value of loans made in Boston</p>
+  	</div>
+    <div class="section fp-auto-height-responsive" id="section3">
+      <div class="slide active">
+          <h2>Spatial Distribution</h2>
+          <p>Given the relatively large concentration of dollars being lent by the top 10 lenders, we were curious about whether lenders were allocating significant amounts of capital to census tracts that are at risk under different climate change scenarios. </p>
+          <p>In order to do that, we developed 4 maps within this slideshow for each of the 4 flood-risk scenarios. The blue color signifies a tract that exceeded our risk threshold of 25% of that tract’s area being flooded under a specific climate change scenario. The tooltip provides the tract number, the amount of the tract that would flood under the given climate change scenario, and the three banks that have lent the most in that tract.</p>
+          <p>We recognize that the threshold of 25% provides only a blunt analytical cutoff point to assess risk. But because we do not know the exact addresses of the loans, we cannot perfectly ascertain whether a specific loan is at risk.  However, 25% of a tract flooding appears to be a significant coverage of the tract so we can safely assume that extensive damage would result. As a result, we classified tracts as either not at risk (below the 25% threshold) or at risk (when they exceeded the threshold).</p>
+      </div>
+      <div class="slide" id="slide-2-1">
+          <div id="stmap1"></div>
+      </div>
+      <div class="slide" id="slide-2-2">
+          <div id="stmap2"></div>
+      </div>
+      <div class="slide" id="slide-2-3">
+          <div id="stmap3"></div>
+      </div>
+      <div class="slide">
+          <div id="stmap4"></div>
+      </div>
+    </div>
+    <div class="section fp-auto-height-responsive" id="section4">
+      <h2>A Drop in the Bucket</h2>
+      <p>The large white circle represents the total amount of loans originated in Boston ($57.4B) between 2014 and 2016. Each ripple of blue in the middle represents the dollar value of loans that may be at risk under increasingly severe climate change projections - even at the most extreme climate change scenario, these figures are a mere drop in the bucket ($2.8B).</p>
+      <div id="eyeball"></div>
+    </div>
+    <div class="section fp-auto-height-responsive" id="section5">
+      <div id="barchart">
+        <h2>Top lenders revisited</h2>
+        <p>Surprised by the relatively low amount of capital at risk to climate change, we sought to determine whether the lending practices of the top 10 lenders in Boston followed, or diverged from, this trend. With the exception of East Boston Savings Bank, no lender in the top 10 has lent more than 25% of their Boston portfolio in tracts that are at risk under any climate change scenario. Even if banks are not explicitly stress testing their portfolios with an eye towards climate change risk, they may nonetheless be actively diversifying their lending portfolios in order to account for those risks and, as a result, limiting the amount of deals that they conduct in any given risk area.</p>
+        <script type="text/javascript" src="js/barchart.js"></script>
+      </div>
+    </div>
+    <div class="section fp-auto-height-responsive" id="section6">
+      <h2>FINDINGS, IMPACT, AND FUTURE RESEARCH</h2>
+      <p>Ultimately, we determined that the areas at risk for significant flooding from climate change are relatively few but spatially proximate. As a percentage of total lending, the value of loans at risk is actually quite small. As a result, focusing on lending institutions as a key lever in climate change risk mitigation might not be the best route to pursue.</p>
+      <p>Instead, we may need to alert municipal, regional, or state governments that large financial institutions have diversified away their risk to climate change. As a result, the governments may need to engage more local banks that may have more exposure, or begin to prepare plans to assist individuals who live in climate risk zones, since the banks may have no incentive to stop lending there, at least in small doses.</p>
+      <p>Moreover, further research must be conducted to assess the relationship between the spatial patterns of lending and climate change risk, as well as more details about the types of banks and their investment strategies. Future analysis should incorporate whether the census tracts that are at risk of climate change are economically disadvantaged, as well. That would increase the importance of municipal, regional, or state governments stepping in to provide assistance.</p>
+    </div>
+    <div class="section fp-auto-height-responsive" id="section7">
+      <h2>Further information</h2>
+      <p>Financial Information:
+      </br><a href="http://news.bostoncommonasset.com/wp-content/uploads/2017/01/Update-Report-On-Borrowed-Time-Banks-Climate-Change.pdf" target="_blank">On Borrowed Time, Boston Common Asset Management (2017)</a>
+      </br><a href="https://www.ffiec.gov/hmda/default.htm" target="_blank">HMDA Home Page</a>
+      </br><a href="https://www.ffiec.gov/hmda/hmdaraw.htm" target="_blank">HMDA Data</a></p>
+
+      <p>Climate Information:
+      </br><a href="https://www.boston.gov/departments/environment/climate-ready-boston" target="_blank">Climate Ready Boston, City of Boston (2017)</a></p>
+
+      <p>News Coverage of Climate Change + Real Estate:
+      </br><a href="https://www.nytimes.com/2016/11/24/science/global-warming-coastal-real-estate.html" target = "_blank">“Perils of Climate Change Could Swamp Coastal Real Estate”, New York Times (11/24/16)</a>
+      </br><a href="https://www.bostonglobe.com/business/2018/04/23/sunk-water-view-homes-near-ocean-risk-losing-value-even-hot-market/HskjAqt0acqHiBcbh4L0XL/story.html" target = "_blank">“Homes near ocean risk losing value, even in a hot market”, Boston Globe (4/23/18)</a></p>
+      <h2>Team members</h2>
+        <table width='80%' align='center'>
+    			<tr>
+    				<td width=25% valign='middle' text-align='center'>
+              <p>Wan Chantavilasvong
+              </br><i> Design Principal</i></p>
+            </td>
+            <td width=25% valign='middle' text-align='center'>
+              <p>Louis Liss
+              </br><i> VP of Data Analytics</i></p>
+            </td>
+            <td width=25% valign='middle' text-align='center'>
+              <p>Michael Pearce
+              </br><i> Project Manager</i></p>
+            </td>
+            <td width=25% valign='middle' text-align='center'>
+              <p>Xudong Sun
+              </br><i> Chief Technology Officer</i></p>
+            </td>
+          </tr>
+    		</table>
+      </div>
+    </div>
+  </div>
+  <script>
+  // SANKEY CHART FOR DIV #SECTION2
+      var width = 900, height = 300;
+
+      // var formatNumber = d3.format(",.0f"),    // zero decimal places
+      //     format = function(d) { return formatNumber(d) + ",000"; };
+      // append the svg object to the body of the page
+
+      // Set the sankey diagram properties
+      var sankey = d3.sankey()
+          .nodeWidth(30)
+          .nodePadding(5)
+          .size([width, height]);
+
+      var path = sankey.link();
+
+      var svgLenders = d3.select("#sankey").append("svg")
+          .attr("width", width)
+          .attr("height", height)
+        .append("g");
+
+      // load the data
+      d3.csv("data/boston-origination-by-amount-norisk.csv", function(error, data) {
+        //set up graph in same style as original example but empty
+        var units = ",000";
+
+        var formatNumber = d3.format(",.0f"),    // zero decimal places
+            format = function(d) { return formatNumber(d) + units; };
+            color = d3.scaleOrdinal(d3.schemeCategory20);
+
+        graph = {"nodes" : [], "links" : []};
+
+        data.forEach(function (d) {
+          graph.nodes.push({ "name": d.source });
+          graph.nodes.push({ "name": d.target });
+          graph.links.push({ "source": d.source,
+                             "target": d.target,
+                             "value": +d.value });
+         });
+        // return only the distinct / unique nodes
+        graph.nodes = d3.keys(d3.nest()
+          .key(function (d) { return d.name; })
+          .object(graph.nodes));
+        // loop through each link replacing the text with its index from node
+        graph.links.forEach(function (d, i) {
+          graph.links[i].source = graph.nodes.indexOf(graph.links[i].source);
+          graph.links[i].target = graph.nodes.indexOf(graph.links[i].target);
+        });
+        // now loop through each nodes to make nodes an array of objects
+        // rather than an array of strings
+        graph.nodes.forEach(function (d, i) {
+          graph.nodes[i] = { "name": d };
+        });
+        sankey
+            .nodes(graph.nodes)
+            .links(graph.links)
+            .layout(32);
+        // add in the links
+
+        var link = svgLenders.append("g").selectAll(".link")
+            .data(graph.links)
+          .enter().append("path")
+            .attr("class", "link")
+            .attr("d", sankey.link())
+            // .style("stroke-width", "3px")
+            .style("stroke-width", function(d) { console.log(d.dy);
+              return Math.max(1, d.dy); })
+            .style("stroke", "#fff")
+            .style("opacity", ".2")
+            .sort(function(a, b) { return b.dy - a.dy; });
+        // add the link titles
+        link.append("title")
+              .text(function(d) {
+              return d.source.name + format(d.value); });
+        // add in the nodes
+        var node = svgLenders.append("g").selectAll(".node")
+            .data(graph.nodes)
+          .enter().append("g")
+            .attr("class", "node")
+            .attr("transform", function(d) {
+            return "translate(" + d.x + "," + d.y + ")"; })
+            .call(d3.drag()
+              .subject(function(d) {
+                return d;
+              })
+              .on("start", function() {
+                this.parentNode.appendChild(this);
+              })
+              .on("drag", dragmove));
+        // add the rectangles for the nodes
+        node.append("rect")
+            .attr("height", function(d) { return d.dy; })
+            .attr("width", sankey.nodeWidth())
+            .style("fill", "#fff")
+          .append("title")
+            .text(function(d) {
+            return d.name + "\n" + format(d.value); });
+        // add in the title for the nodes
+        node.append("text")
+            .attr("x", -6)
+            .attr("y", function(d) { return d.dy / 2; })
+            .attr("dy", ".35em")
+            .attr("text-anchor", "end")
+            .attr("fill", "#fff")
+            .attr("transform", null)
+            .text(function(d) { return d.name + " $" + format(d.value); })
+          .filter(function(d) { return d.x < width / 2; })
+            .attr("x", 6 + sankey.nodeWidth())
+            .attr("text-anchor", "start");
+        // the function for moving the nodes
+        function dragmove(d) {
+          d3.select(this)
+            .attr("transform",
+                  "translate("
+                     + d.x + ","
+                     + (d.y = Math.max(
+                        0, Math.min(height - d.dy, d3.event.y))
+                       ) + ")");
+          sankey.relayout();
+          link.attr("d", path);
+        }
+      });
+  </script>
+  <script type="text/javascript" src="js/staticmap.js"></script>
+  <script type="text/javascript" src="js/eyeball.js"></script>
+</body>
+</html>

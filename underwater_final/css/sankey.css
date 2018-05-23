@@ -1,0 +1,23 @@
+.node rect {
+  cursor: move;
+  fill-opacity: .9;
+  shape-rendering: crispEdges;
+}
+.node text {
+  pointer-events: none;
+  text-shadow: none;
+  font-family: "Karla", sans-serif;
+  font-size: .6em;
+  letter-spacing: .1em;
+  color: #ffffff;
+}
+.link {
+  fill: none;
+  stroke: #bebebe;
+  stroke-width: 2px;
+  stroke-opacity: .8;
+}
+.link:hover {
+  stroke-width: 3px;
+  stroke-opacity: 1;
+}

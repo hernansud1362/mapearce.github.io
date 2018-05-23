@@ -1,0 +1,11 @@
+.axisBarChart line{
+  stroke: #ffffff;
+}
+
+.axisBarChart path{
+  stroke: #ffffff;
+}
+
+.axisBarChart text{
+  fill: #ffffff;
+}
